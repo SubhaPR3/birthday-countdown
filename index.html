@@ -1,28 +1,182 @@
-<div class="container">
-    <h1 id="headline">Countdown to Koli's Birthday</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to Koli's Birthday</title>
     
-    <div id="countdown">
-        <div class="time-box">
-            <span id="days">00</span>
-            <p>Days</p>
+    <style>
+        /* --- CSS STYLES --- */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* A deep, romantic, moving gradient */
+            background: linear-gradient(135deg, #1e1b4b, #4c1d95, #be123c);
+            background-size: 300% 300%;
+            animation: gradientMove 12s ease infinite;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 400;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        #countdown {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 1.5rem 1rem;
+            border-radius: 16px;
+            min-width: 120px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.02), 0 8px 16px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .time-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .time-box p {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        #content {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .emoji span {
+            font-size: 4rem;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 650px) {
+            .container { padding: 2rem 1rem; }
+            h1 { font-size: 1.5rem; }
+            #countdown { flex-wrap: wrap; gap: 1rem; }
+            .time-box { min-width: 45%; padding: 1rem; }
+            .time-box span { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="headline">Countdown to Koli's Birthday</h1>
+        
+        <div id="countdown">
+            <div class="time-box">
+                <span id="days">00</span>
+                <p>Days</p>
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                <p>Hours</p>
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                <p>Minutes</p>
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                <p>Seconds</p>
+            </div>
         </div>
-        <div class="time-box">
-            <span id="hours">00</span>
-            <p>Hours</p>
-        </div>
-        <div class="time-box">
-            <span id="minutes">00</span>
-            <p>Minutes</p>
-        </div>
-        <div class="time-box">
-            <span id="seconds">00</span>
-            <p>Seconds</p>
+
+        <div id="content" class="emoji">
+            <span>🎉</span>
+            <span>🎂</span>
+            <span>💖</span>
         </div>
     </div>
 
-    <div id="content" class="emoji">
-        <span>🎉</span>
-        <span>🎂</span>
-        <span>💖</span>
-    </div>
-</div>
+    <script>
+        (function () {
+            const second = 1000,
+                minute = second * 60,
+                hour = minute * 60,
+                day = hour * 24;
+
+            let today = new Date();
+            
+            // Set for May 4th (Months are 0-indexed: 4 = May)
+            let birthday = new Date(today.getFullYear(), 4, 4); 
+
+            // If today is past May 4th, target next year
+            if (today.getTime() > birthday.getTime()) {
+                birthday.setFullYear(birthday.getFullYear() + 1);
+            }
+
+            const countDown = birthday.getTime(),
+                x = setInterval(function () {
+                    const now = new Date().getTime(),
+                        distance = countDown - now;
+
+                    document.getElementById("days").innerText = Math.floor(distance / day);
+                    document.getElementById("hours").innerText = Math.floor((distance % day) / hour);
+                    document.getElementById("minutes").innerText = Math.floor((distance % hour) / minute);
+                    document.getElementById("seconds").innerText = Math.floor((distance % minute) / second);
+
+                    if (distance < 0) {
+                        document.getElementById("headline").innerText = "It's Koli's birthday!";
+                        document.getElementById("countdown").style.display = "none";
+                        document.getElementById("content").style.display = "block";
+                        clearInterval(x);
+                    }
+                }, 1000);
+        })();
+    </script>
+</body>
+</html>
