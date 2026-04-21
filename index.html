@@ -6,7 +6,6 @@
     <title>Countdown to Koli's Birthday</title>
     
     <style>
-        /* --- CSS STYLES --- */
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
         * {
@@ -16,7 +15,6 @@
         }
 
         body {
-            /* A deep, romantic, moving gradient */
             background: linear-gradient(135deg, #1e1b4b, #4c1d95, #be123c);
             background-size: 300% 300%;
             animation: gradientMove 12s ease infinite;
@@ -97,9 +95,11 @@
             margin-top: 2rem;
         }
 
+        /* Adjusted slightly to fit 6 emojis nicely */
         .emoji span {
-            font-size: 4rem;
-            margin: 0 10px;
+            font-size: 3.5rem; 
+            margin: 0 5px;
+            display: inline-block;
         }
 
         @media (max-width: 650px) {
@@ -108,6 +108,7 @@
             #countdown { flex-wrap: wrap; gap: 1rem; }
             .time-box { min-width: 45%; padding: 1rem; }
             .time-box span { font-size: 2.5rem; }
+            .emoji span { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -136,9 +137,12 @@
         </div>
 
         <div id="content" class="emoji">
-            <span>🎉</span>
+            <span>😔</span>
             <span>🎂</span>
-            <span>💖</span>
+            <span>❤️</span>
+            <span>🎁</span>
+            <span>✨</span>
+            <span>🥺</span>
         </div>
     </div>
 
@@ -151,10 +155,9 @@
 
             let today = new Date();
             
-            // Set for May 4th (Months are 0-indexed: 4 = May)
+            // Set for May 4th
             let birthday = new Date(today.getFullYear(), 4, 4); 
 
-            // If today is past May 4th, target next year
             if (today.getTime() > birthday.getTime()) {
                 birthday.setFullYear(birthday.getFullYear() + 1);
             }
