@@ -9,7 +9,7 @@
         mm = String(today.getMonth() + 1).padStart(2, "0"),
         yyyy = today.getFullYear(),
         nextYear = yyyy + 1,
-        dayMonth = "04/05/", // Set your day and month here
+        dayMonth = "05/04/", // Updated to May 4th (MM/DD/)
         birthday = dayMonth + yyyy;
 
     today = mm + "/" + dd + "/" + yyyy;
@@ -33,5 +33,5 @@
                 document.getElementById("content").style.display = "block";
                 clearInterval(x);
             }
-        }, 0);
+        }, 1000); // Note: Changed the interval from 0 to 1000ms so it doesn't drain CPU
 })();
