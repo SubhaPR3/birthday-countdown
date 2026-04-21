@@ -6,14 +6,11 @@
 
     let today = new Date();
     
-    // In JavaScript, months are 0-indexed! (0 = Jan, 1 = Feb ... 4 = May)
-    const targetMonth = 4; // May
-    const targetDay = 4;   // 4th
-    
-    // Create a date object for May 4th of the current year
-    let birthday = new Date(today.getFullYear(), targetMonth, targetDay);
+    // Set the exact target: May 4th. 
+    // In JavaScript, months are 0-indexed (Jan = 0, Feb = 1, Mar = 2, Apr = 3, May = 4)
+    let birthday = new Date(today.getFullYear(), 4, 4); 
 
-    // If today's date is past May 4th, push the target to next year
+    // If today is past May 4th, push the target to May 4th of next year
     if (today.getTime() > birthday.getTime()) {
         birthday.setFullYear(birthday.getFullYear() + 1);
     }
@@ -23,13 +20,14 @@
             const now = new Date().getTime(),
                 distance = countDown - now;
 
-            (document.getElementById("days").innerText = Math.floor(distance / day)),
-            (document.getElementById("hours").innerText = Math.floor((distance % day) / hour)),
-            (document.getElementById("minutes").innerText = Math.floor((distance % hour) / minute)),
-            (document.getElementById("seconds").innerText = Math.floor((distance % minute) / second));
+            document.getElementById("days").innerText = Math.floor(distance / day);
+            document.getElementById("hours").innerText = Math.floor((distance % day) / hour);
+            document.getElementById("minutes").innerText = Math.floor((distance % hour) / minute);
+            document.getElementById("seconds").innerText = Math.floor((distance % minute) / second);
 
             if (distance < 0) {
-                document.getElementById("headline").innerText = "It's my birthday!";
+                // Customizing the headline based on your text
+                document.getElementById("headline").innerText = "It's Koli's birthday!";
                 document.getElementById("countdown").style.display = "none";
                 document.getElementById("content").style.display = "block";
                 clearInterval(x);
