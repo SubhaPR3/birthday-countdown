@@ -4,28 +4,29 @@
         hour = minute * 60,
         day = hour * 24;
 
-    let today = new Date(),
-        dd = String(today.getDate()).padStart(2, "0"),
-        mm = String(today.getMonth() + 1).padStart(2, "0"),
-        yyyy = today.getFullYear(),
-        nextYear = yyyy + 1,
-        dayMonth = "05/04/", // Updated to May 4th (MM/DD/)
-        birthday = dayMonth + yyyy;
+    let today = new Date();
+    
+    // In JavaScript, months are 0-indexed! (0 = Jan, 1 = Feb ... 4 = May)
+    const targetMonth = 4; // May
+    const targetDay = 4;   // 4th
+    
+    // Create a date object for May 4th of the current year
+    let birthday = new Date(today.getFullYear(), targetMonth, targetDay);
 
-    today = mm + "/" + dd + "/" + yyyy;
-    if (today > birthday) {
-        birthday = dayMonth + nextYear;
+    // If today's date is past May 4th, push the target to next year
+    if (today.getTime() > birthday.getTime()) {
+        birthday.setFullYear(birthday.getFullYear() + 1);
     }
 
-    const countDown = new Date(birthday).getTime(),
+    const countDown = birthday.getTime(),
         x = setInterval(function () {
             const now = new Date().getTime(),
                 distance = countDown - now;
 
             (document.getElementById("days").innerText = Math.floor(distance / day)),
-                (document.getElementById("hours").innerText = Math.floor((distance % day) / hour)),
-                (document.getElementById("minutes").innerText = Math.floor((distance % hour) / minute)),
-                (document.getElementById("seconds").innerText = Math.floor((distance % minute) / second));
+            (document.getElementById("hours").innerText = Math.floor((distance % day) / hour)),
+            (document.getElementById("minutes").innerText = Math.floor((distance % hour) / minute)),
+            (document.getElementById("seconds").innerText = Math.floor((distance % minute) / second));
 
             if (distance < 0) {
                 document.getElementById("headline").innerText = "It's my birthday!";
@@ -33,5 +34,5 @@
                 document.getElementById("content").style.display = "block";
                 clearInterval(x);
             }
-        }, 1000); // Note: Changed the interval from 0 to 1000ms so it doesn't drain CPU
+        }, 1000);
 })();
